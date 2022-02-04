@@ -14,6 +14,7 @@ public class victory_print {
 		System.out.println("Please enter number of prints you wish:\n");
 		Scanner sc = new Scanner(System.in);
 		int numReps = sc.nextInt();
+		sc.close();
 		for (int i=0; i<numReps; i++) {
 			print_fun();
 		}
