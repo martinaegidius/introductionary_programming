@@ -11,5 +11,8 @@ public class UsingClassConstant {
 			System.out.println("+"); //end of string-line (moved into loop)
 		}
 		System.out.print("\n"); //added newline (added outside of loop)
+		//System.out.print("I am done");
 	}
+	
 }
+
