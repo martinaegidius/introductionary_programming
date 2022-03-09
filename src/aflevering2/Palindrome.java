@@ -11,27 +11,21 @@ public class Palindrome {
 	}
 	public static void isItPalindrome(String input) {
 		String testInput = input.replaceAll("[^a-zA-Z]+", ""); //replaces all symbols/numbers with nothing
-		//String testInput = input.replaceAll("\\d", ""); //replaces numbers
 		testInput = testInput.toLowerCase(); //ignore big/small letters
 		int length = testInput.length();
-		System.out.println(testInput);
-		
-		
+		if(length==0) {
+			System.out.println("Input does not contain characters at all. Please retry");
+			return;
+		}
 		for (int i=0;i<=length/2-1;i++) {
-			System.out.println(testInput.charAt(i));
-			System.out.println(testInput.charAt(length-i-1));
-			
-			if(testInput.charAt(i)!=testInput.charAt(length-i-1) && i<length/2-1) {
-			 
+			if(testInput.charAt(i)!=testInput.charAt(length-i-1) && i<length/2-1) {	 
 				System.out.println("\""+input+"\"" + " is not a palindrome.");
 				return;
 			}
 			else if(testInput.charAt(i)==testInput.charAt(length-i-1) && i==length/2-1) {
-				System.out.println("\""+input+"\"" + " is a palindrome!");
+				System.out.println("\""+input+"\"" + " is a palindrome, when ignoring case, numbers and symbols!");
 				return;
 			}
-		}
-		
+		}	
 	}
-
 }
