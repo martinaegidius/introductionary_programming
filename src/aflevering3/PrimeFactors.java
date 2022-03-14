@@ -22,27 +22,41 @@ public class PrimeFactors {
     	if(input == 0) {
     		return -1;
     	}
+    	
     	double upperBound = Math.sqrt((double)input);
         System.out.print("List of prime factors: ");
-        for (long i = 2; i <= upperBound;){
-            result = input%i;
+        if(input==3) { //special case
+    		System.out.print("3");
+    		return 0;
+    	}
+        if(input==1) {
+        	System.out.print("In modern mathematics, 1 has no prime decomposition");
+        	return 0;
+        }
+        
+        for (long i = 2; i <= upperBound+1;){ //max sqrt(n)
+        	result = input%i;
+        	if(i>upperBound && input!=0 && result!=0) { //if we have reached sqrt(n) and found no decomp
+            	System.out.print(input);
+            	return 0;
+            }
             if (result == 0) {
-                if ((long)((float)input/i) == 1) {
-                    input = (long)((float)input / i);
+                if (input/i == 1) { //endpoint of decomposition
                     System.out.print(i);
+                    return 0;
                 } 
-                else if (i==upperBound && result==0) {
-                	System.out.print(input);
-                	return 0;
+                else if (i==upperBound && result==0) { //square-root-point
+                	input = input/i;
+                	System.out.print(i + ", ");
                 }
                 else {
-                    input = (long)((float)input / i);
+                    input = input / i; //normal point in decomposition
                     System.out.print(i + ", ");
                 }
+                
             } else {
-                    i++;
-                    
-            }
+                    i++; 
+            } 
         }
         return 0;
     }
