@@ -1,18 +1,22 @@
 package aflevering3;
 
+import java.util.Scanner;
+
 public class RaceTrack {
 	public static void main(String[] args) {
 		int n = 10;
 		initializeTrack(n);
 		int x = initializePositionX(n);
 		int y = initializePositionY(n);
-		/*while(x>-n && x<n && (x>n/2 || x<-n/2) && y>-n && y<n && (y>n/2||y<-n/2)){
-			int direction = inputScanner();
-			x = newPosX(direction);
-			y = newPosY(direction);
-			plotPos(x,y);
+		while(x>-n && x<n) { //&& (x>n/2 || x<-n/2) && y>-n && y<n && (y>n/2||y<-n/2)){
+			int direction = directionScanner();
+			int xn = newPosX(direction,x);
+			int yn = newPosY(direction,y);
+			plotPos(x,y,xn,y);
+			x = xn;
+			y = yn;
 		}
-		*/
+		
 	}
 	
 	public static void initializeTrack(int n) {
@@ -53,9 +57,73 @@ public class RaceTrack {
 		return n/2+(int)Math.ceil((double)n/4);
 	}
 	
-	public static int inputScanner() {
-		//scan ints blablabla
-		return 0;
+	public static int newPosX(int key, int x) {
+		if (key == 6 || key==9 || key==3) {
+			int xn = x+1;
+			return xn;
+		}
+		else if (key==4||key==7||key==1) {
+			int xn = x-1;
+			return xn;
+		}
+		
+		else {
+			return x;
+		}
+	}
+	public static int newPosY(int key, int y) {
+		if (key == 7 || key==8 || key==9) {
+			int yn = y+1;
+			return yn;
+		}
+		else if (key==1||key==2||key==3) {
+			int yn = y-1;
+			return yn;
+		}
+		
+		else {
+			return y;
+		}
+	}
+	
+	public static void plotPos(int x0, int y0, int x1, int y1) {
+		StdDraw.line(x0, y0, x1, y1);
+		StdDraw.point(x1, y1);
+	}
+	
+	public static int directionScanner() {
+		Scanner console = new Scanner(System.in);
+		System.out.println("Enter direction ");
+		if (console.hasNextInt()) {
+			int input = console.nextInt();
+			if(input<0 && input>-10) {
+				System.out.println("Invalid input. Converted to positive.");
+				console.close();
+				return -input;
+			}
+			if(input<10 && input>0) {
+				console.close();
+				return input;
+				
+			}
+			console.close();
+			if(input==0) {
+				return -1;
+			}
+			return input;
+		}
+		else if (console.hasNextDouble()) {
+			System.out.println("Double value found. Please enter an integer value");
+			int input = directionScanner();
+			return input;
+		}
+		else {
+			System.out.println("Error - input was not integer. Please try entering an integer value (0 to terminate): ");
+			int input = directionScanner();
+			return input;
+		}	
+	
+	
 	}
 	
 }
