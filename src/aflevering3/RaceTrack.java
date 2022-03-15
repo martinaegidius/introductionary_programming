@@ -5,6 +5,39 @@ import java.util.Scanner;
 public class RaceTrack {
 	public static void main(String[] args) {
 		int n = 10;
+		raceTrackGame(n);
+		System.out.println("Whoops - you seem to have crashed, buddy!\nWould you like to retry?(1 for yes, 0 for no)");
+		int retry = retryScanner();
+		if (retry==0) {
+			System.out.println("Thank you for playing.");
+			return;
+		}
+		else {raceTrackGame(n);}
+	}
+	
+	public static int retryScanner() {
+		Scanner console = new Scanner(System.in);
+		int input = -1;
+		if (console.hasNextInt()) {
+			input = console.nextInt();
+			if(input==0 || input==1) {
+				//console.close();
+				return input;
+			}
+			else {return -1;}
+		}
+				
+		else {
+			System.out.println("Please enter 0 or 1...: ");
+			console.nextLine();
+			input = retryScanner();
+			return input;
+			}
+		
+	}
+	
+	
+	public static void raceTrackGame(int n) {
 		initializeTrack(n);
 		int x = initializePositionX(n);
 		int y = initializePositionY(n);
@@ -16,9 +49,7 @@ public class RaceTrack {
 			x = xn;
 			y = yn;
 		}
-		System.out.println("Whoops - you seem to have crashed, buddy!");
 		return;
-		
 	}
 	
 	public static void initializeTrack(int n) {
@@ -89,8 +120,13 @@ public class RaceTrack {
 	}
 	
 	public static void plotPos(int x0, int y0, int x1, int y1) {
+		StdDraw.setPenColor(StdDraw.RED);
 		StdDraw.line(x0, y0, x1, y1);
+		StdDraw.setPenColor(StdDraw.BLACK);
+		StdDraw.setPenRadius(8.0/1000);
 		StdDraw.point(x1, y1);
+		StdDraw.setPenRadius(10.0/1000);
+		
 	}
 	
 	public static int directionScanner() {
