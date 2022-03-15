@@ -8,14 +8,16 @@ public class RaceTrack {
 		initializeTrack(n);
 		int x = initializePositionX(n);
 		int y = initializePositionY(n);
-		while(x>-n && x<n) { //&& (x>n/2 || x<-n/2) && y>-n && y<n && (y>n/2||y<-n/2)){
+		while(x>-n && x<n && y>-n && y<n && !((x<=n/2 && x>=-n/2) && (y<=n/2 && y>=-n/2))){ //while in boundaries 
 			int direction = directionScanner();
 			int xn = newPosX(direction,x);
 			int yn = newPosY(direction,y);
-			plotPos(x,y,xn,y);
+			plotPos(x,y,xn,yn);
 			x = xn;
 			y = yn;
 		}
+		System.out.println("Whoops - you seem to have crashed, buddy!");
+		return;
 		
 	}
 	
@@ -98,27 +100,31 @@ public class RaceTrack {
 			int input = console.nextInt();
 			if(input<0 && input>-10) {
 				System.out.println("Invalid input. Converted to positive.");
-				console.close();
+				//console.close();
 				return -input;
 			}
 			if(input<10 && input>0) {
-				console.close();
+				//console.close();
 				return input;
-				
 			}
-			console.close();
-			if(input==0) {
-				return -1;
+			//console.close();
+			if(input==0 || input<-9 || input >9) {
+				System.out.println("Invalid input. Please try again");
+				console.nextLine();
+				input = directionScanner();
+				return input;
 			}
 			return input;
 		}
 		else if (console.hasNextDouble()) {
 			System.out.println("Double value found. Please enter an integer value");
+			console.nextLine();
 			int input = directionScanner();
 			return input;
 		}
 		else {
 			System.out.println("Error - input was not integer. Please try entering an integer value (0 to terminate): ");
+			//console.nextLine();
 			int input = directionScanner();
 			return input;
 		}	
@@ -127,3 +133,6 @@ public class RaceTrack {
 	}
 	
 }
+
+
+
