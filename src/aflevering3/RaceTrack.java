@@ -17,7 +17,8 @@ public class RaceTrack {
 	
 	
 	public static int retryScanner() {
-		Scanner console = new Scanner(System.in);
+		Scanner console = new Scanner(System.
+				in);
 		int input = -1;
 		System.out.println("Would you like to retry?(1 for yes, 0 for no)");
 		if (console.hasNextInt()) {
@@ -46,6 +47,7 @@ public class RaceTrack {
 			int direction = directionScanner();
 			int xn = newPosX(direction,x);
 			int yn = newPosY(direction,y);
+			System.out.println("Xn is = "+xn + ", Yn is = "+yn);
 			if(xn==0 && x==-1 && yn>=n/2 && yn<=n){
 				plotPos(x,y,xn,yn);
 				distance ++;
