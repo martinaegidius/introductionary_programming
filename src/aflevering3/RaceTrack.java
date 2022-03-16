@@ -43,11 +43,17 @@ public class RaceTrack {
 		int distance = 0;
 		int x = initializePositionX(n);
 		int y = initializePositionY(n);
+		int xn = 0;
+		int yn = y;
+		int velX = 0;
+		int velY = 0;
 		while(x>-n && x<n && y>-n && y<n && !((x<=n/2 && x>=-n/2) && (y<=n/2 && y>=-n/2))){ //while in boundaries 
 			int direction = directionScanner();
-			int xn = newPosX(direction,x);
-			int yn = newPosY(direction,y);
-			System.out.println("Xn is = "+xn + ", Yn is = "+yn);
+			velX += getVelX(direction);
+			velY += getVelY(direction);
+			System.out.println("VelX is = "+velX + ", velY is = "+velY);
+			xn = x + velX;
+			yn = y + velY;
 			if(xn==0 && x==-1 && yn>=n/2 && yn<=n){
 				plotPos(x,y,xn,yn);
 				distance ++;
@@ -103,32 +109,32 @@ public class RaceTrack {
 		return n/2+(int)Math.ceil((double)n/4);
 	}
 	
-	public static int newPosX(int key, int x) {
+	public static int getVelX(int key) {
 		if (key == 6 || key==9 || key==3) {
-			int xn = x+1;
+			int xn = 1;
 			return xn;
 		}
 		else if (key==4||key==7||key==1) {
-			int xn = x-1;
+			int xn = -1;
 			return xn;
 		}
 		
 		else {
-			return x;
+			return 0;
 		}
 	}
-	public static int newPosY(int key, int y) {
+	public static int getVelY(int key) {
 		if (key == 7 || key==8 || key==9) {
-			int yn = y+1;
+			int yn = 1;
 			return yn;
 		}
 		else if (key==1||key==2||key==3) {
-			int yn = y-1;
+			int yn = -1;
 			return yn;
 		}
 		
 		else {
-			return y;
+			return 0;
 		}
 	}
 	
