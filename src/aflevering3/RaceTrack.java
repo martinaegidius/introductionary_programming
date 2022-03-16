@@ -17,8 +17,7 @@ public class RaceTrack {
 	
 	
 	public static int retryScanner() {
-		Scanner console = new Scanner(System.
-				in);
+		Scanner console = new Scanner(System.in);
 		int input = -1;
 		System.out.println("Would you like to retry?(1 for yes, 0 for no)");
 		if (console.hasNextInt()) {
@@ -39,6 +38,7 @@ public class RaceTrack {
 	}
 	
 	public static void raceTrackGame(int n) {
+		StdDraw.clear();
 		initializeTrack(n);
 		int distance = 0;
 		int x = initializePositionX(n);
@@ -54,12 +54,13 @@ public class RaceTrack {
 			System.out.println("VelX is = "+velX + ", velY is = "+velY);
 			xn = x + velX;
 			yn = y + velY;
-			if(xn==0 && x==-1 && yn>=n/2 && yn<=n){
+			if(xn>=0 && x<=-1 && yn>=n/2 && yn<=n){ //check if goal-line
 				plotPos(x,y,xn,yn);
 				distance ++;
-				System.out.println("GOAL! You finished the race in " + distance + "steps!");
+				System.out.println("GOAL! You finished the race in " + distance + " steps. Great job!");
 				return;
 			}
+			
 			System.out.println("x = " +x);
 			System.out.println("y = " + y);
 			plotPos(x,y,xn,yn);
@@ -142,10 +143,8 @@ public class RaceTrack {
 		StdDraw.setPenColor(StdDraw.RED);
 		StdDraw.line(x0, y0, x1, y1);
 		StdDraw.setPenColor(StdDraw.BLACK);
-		StdDraw.setPenRadius(8.0/1000);
 		StdDraw.point(x1, y1);
-		StdDraw.setPenRadius(10.0/1000);
-		
+		StdDraw.point(x0, y0); //dont let line overwrite old point
 	}
 	
 	public static int directionScanner() {
