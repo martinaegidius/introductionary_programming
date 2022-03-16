@@ -1,6 +1,10 @@
 package aflevering3;
 
 import java.util.Scanner;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class RaceTrack {
 	public static void main(String[] args) {
@@ -102,6 +106,26 @@ public class RaceTrack {
 		//startpoint
 		StdDraw.setPenColor(StdDraw.BLACK);
 		StdDraw.point(0, n/2+Math.ceil((double)n/4));
+		
+		//controls figure 
+		
+		//String filename = "/home/max/Desktop/s194119/oop/src/aflevering3/controls.png";
+		Path path = Paths.get("controls.png");
+		System.out.println(path);
+		try{
+			if (Files.notExists(path)) {
+				return;
+			}
+			String filename = path.toRealPath().toString();
+			System.out.println(filename);
+			StdDraw.picture(0, 0, filename);
+		}
+		catch (IOException e){
+			e.printStackTrace();
+		}
+		//
+		///home/max/Desktop/s194119/oop/src/aflevering3/controls.png
+		
 	}
 	public static int initializePositionX(int n) {
 		return 0;
