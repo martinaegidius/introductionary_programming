@@ -6,18 +6,20 @@ public class RaceTrack {
 	public static void main(String[] args) {
 		int n = 10;
 		raceTrackGame(n);
-		System.out.println("Whoops - you seem to have crashed, buddy!\nWould you like to retry?(1 for yes, 0 for no)");
 		int retry = retryScanner();
-		if (retry==0) {
-			System.out.println("Thank you for playing.");
-			return;
+		while (retry==1) {
+			raceTrackGame(n);
+			retry = retryScanner();
 		}
-		else {raceTrackGame(n);}
-	}
+		System.out.println("Thank you for playing.");
+		return;
+		}
+	
 	
 	public static int retryScanner() {
 		Scanner console = new Scanner(System.in);
 		int input = -1;
+		System.out.println("Would you like to retry?(1 for yes, 0 for no)");
 		if (console.hasNextInt()) {
 			input = console.nextInt();
 			if(input==0 || input==1) {
@@ -33,22 +35,31 @@ public class RaceTrack {
 			input = retryScanner();
 			return input;
 			}
-		
 	}
-	
 	
 	public static void raceTrackGame(int n) {
 		initializeTrack(n);
+		int distance = 0;
 		int x = initializePositionX(n);
 		int y = initializePositionY(n);
 		while(x>-n && x<n && y>-n && y<n && !((x<=n/2 && x>=-n/2) && (y<=n/2 && y>=-n/2))){ //while in boundaries 
 			int direction = directionScanner();
 			int xn = newPosX(direction,x);
 			int yn = newPosY(direction,y);
+			if(xn==0 && x==-1 && yn>=n/2 && yn<=n){
+				plotPos(x,y,xn,yn);
+				distance ++;
+				System.out.println("GOAL! You finished the race in " + distance + "steps!");
+				return;
+			}
+			System.out.println("x = " +x);
+			System.out.println("y = " + y);
 			plotPos(x,y,xn,yn);
+			distance++;
 			x = xn;
 			y = yn;
 		}
+		System.out.println("Whoops, you seem to have crashed, buddy!");
 		return;
 	}
 	
