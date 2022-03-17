@@ -110,7 +110,7 @@ public class RaceTrack {
 		//controls figure 
 		
 		//String filename = "/home/max/Desktop/s194119/oop/src/aflevering3/controls.png";
-		Path path = Paths.get("controls.png");
+		/*Path path = Paths.get("controls.png");
 		System.out.println(path);
 		try{
 			if (Files.notExists(path)) {
@@ -125,7 +125,8 @@ public class RaceTrack {
 		}
 		//
 		///home/max/Desktop/s194119/oop/src/aflevering3/controls.png
-		
+		*/
+		//StdDraw.picture(0, 0, filename);
 	}
 	public static int initializePositionX(int n) {
 		return 0;
