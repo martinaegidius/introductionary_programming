@@ -2,10 +2,9 @@ package aflevering3;
 
 import java.util.Scanner;
 
-
 public class RaceTrack {
 	public static void main(String[] args) {
-		int n = 10; //n indicates diameter of mid-square. Can be changed, but ratio between track and square is constant. 
+		int n = 10; //n indicates diameter of mid-square. Can be changed, but ratio between track and square is (almost) constant. 
 		raceTrackGame(n);
 		int retry = retryScanner();
 		while (retry==1) {
@@ -52,21 +51,17 @@ public class RaceTrack {
 			int direction = directionScanner();
 			velX += getVelX(direction);
 			velY += getVelY(direction);
-			System.out.println("VelX is = "+velX + ", velY is = "+velY);
 			xn = x + velX;
 			yn = y + velY;
-			
+			plotPos(x,y,xn,yn);
 			if(xn>=0 && x<=-1 && yn>=n/2 && yn<=n){ //check if goal-line
-				plotPos(x,y,xn,yn);
 				distance ++;
 				System.out.println("GOAL! You finished the race in " + distance + " steps. Great job!");
 				return;
 			}
-			plotPos(x,y,xn,yn);
-			//check direction of movement
-			checkDirection(n,xn,yn,velX,velY);	
+			
 			//fixing ghost-tracks (no corner-skipping allowed)
-			if(Math.abs(velY)>Math.abs(velX) && velY!=0 && velX!=0) {
+			if(Math.abs(velY)>=Math.abs(velX) && velY!=0 && velX!=0) {
 				for(int i=Math.abs(velY)-1;i>0;i--) {
 					double checkPosX = x+(double)velX/i;
 					double checkPosY = y+(double)velY/i;
@@ -76,11 +71,10 @@ public class RaceTrack {
 					}
 				}
 			}
-			else if(Math.abs(velX)>Math.abs(velY) && velY!=0 && velX!=0) {
+			else if(Math.abs(velX)>=Math.abs(velY) && velY!=0 && velX!=0) {
 				for(int i=Math.abs(velX)-1;i>0;i--) {
 					double checkPosX = x+(double)velX/i;
 					double checkPosY = y+(double)velY/i;
-					System.out.println(checkPosX+","+checkPosY);
 					if (checkPosX <= n/2 && checkPosX>=-n/2 && (checkPosY<=n/2 && checkPosY>=-n/2)) {
 						loseMessage(n);
 						return;
@@ -90,27 +84,31 @@ public class RaceTrack {
 			distance++; //update distance travelled
 			x = xn; //update positions
 			y = yn; 
+			
+			//overwrite earlier wrong-direction messages
+			StdDraw.setPenColor(StdDraw.WHITE);
+			StdDraw.filledSquare(0, 0, n/2); //inner-edge
+			StdDraw.setPenColor(StdDraw.BLACK);
+			//check direction of movement
+			checkDirection(n,xn,yn,velX,velY);	
 		}
 		loseMessage(n); //when while-loop breaks = loss
 		return;
 	}
 	
 	public static void checkDirection(int n,int xn, int yn, int velX, int velY) {
-		if(xn<n/2 && xn>-n/2 && yn>n/2 && velX<0) {
-			String directionNotifier = "!WRONG DIRECTION!";
+		String directionNotifier = "!WRONG DIRECTION!";
+		if(xn<n && xn>-n && yn>n/2 && yn<n && velX<0) {//upper part of track
 			StdDraw.text(0, 0, directionNotifier);
 		}
-		if(xn<n/2 && xn>-n/2 && yn<n/2 && velX>0) {
-			String directionNotifier = "!WRONG DIRECTION!";
+		if(xn<n && xn>-n && yn<-n/2 && yn>-n && velX>0) { //lower part of track
 			StdDraw.text(0, 0, directionNotifier);
 		}
 		
-		if(xn>n/2 && yn>n/2 && velY>0) {
-			String directionNotifier = "!WRONG DIRECTION!";
+		if(xn>n/2 && xn<n && velY>0) { //righter part of track
 			StdDraw.text(0, 0, directionNotifier);
 		}
-		if(xn<n/2 && yn<n/2 && velY<0) {
-			String directionNotifier = "!WRONG DIRECTION!";
+		if(xn<-n/2 && xn>-n && velY<0) { //left part of track
 			StdDraw.text(0, 0, directionNotifier);
 		}
 		return;

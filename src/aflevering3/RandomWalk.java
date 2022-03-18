@@ -9,12 +9,12 @@ public class RandomWalk {
 			System.out.println("Program exited succesfully.");
 		}
 		else {
-			RandomWalk(input);
+			RandomWalkPlot(input);
 		}
 	}
 	
 	
-	public static void RandomWalk(int size) {
+	public static void RandomWalkPlot(int size) {
 		Random rand = new Random();
 		int positionX = 0;
 		int positionY = 0;
@@ -50,6 +50,7 @@ public class RandomWalk {
 			
 		}
 		System.out.println("Total number of steps = "+distance);
+		//not required, but funny to see:
 		System.out.println("Total number north = " + northCounter);
 		System.out.println("Total number south = " + southCounter);
 		System.out.println("Total number west = " + westCounter);
