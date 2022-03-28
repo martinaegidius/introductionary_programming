@@ -1,5 +1,7 @@
 package aflevering4;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -77,8 +79,9 @@ public class Mandelbrot {
 		
 	}
 
-	public static void fillGrid(double[] arr,String colormap) {
-		int[][] randomColorArr = getColorArr(MAX);
+	public static void fillGrid(double[] arr) {
+		//int[][] randomColorArr = getColorArr(MAX);
+		int[][] randomColorArr = getColorFromFile("src/aflevering4/blues.mnd");
 			
 		double x0 = arr[0];
 		double y0 = arr[1];
@@ -95,13 +98,13 @@ public class Mandelbrot {
 				
 				
 				if(out==MAX) { //this part necessary in case you only want to plot points in the set
-					StdDraw.setPenColor(randomColorArr[out][0],randomColorArr[out][1],randomColorArr[out][2]);
+					StdDraw.setPenColor(randomColorArr[out-1][0],randomColorArr[out-1][1],randomColorArr[out-1][2]);
 					//StdDraw.setPenRadius(125.0/1000);
 					StdDraw.setPenRadius(5.0/1000);
 					StdDraw.point(re, im);
 				}
-				else {
-					StdDraw.setPenColor(randomColorArr[out][0],randomColorArr[out][1],randomColorArr[out][2]);
+				else if (out!=0){ //i dont know why it may return 0, but in some cases it does
+					StdDraw.setPenColor(randomColorArr[out-1][0],randomColorArr[out-1][1],randomColorArr[out-1][2]);
 					StdDraw.setPenRadius(5.0/1000);
 					StdDraw.point(re, im);
 				}
@@ -120,4 +123,28 @@ public class Mandelbrot {
 		}
 		return randomColorArr;
 	}
+	
+	public static int[][] getColorFromFile(String path){
+		int arr[][] = new int[255][3];
+		try {
+			File f = new File(path);
+			Scanner fileRead = new Scanner(f);
+			for (int rows = 0; rows < 255; rows++){
+			   for (int columns = 0; columns < 3; columns++){
+			      arr[rows][columns] = fileRead.nextInt(); 
+			      System.out.print((arr[rows][columns]));
+			      System.out.print(",");
+			   }
+			   System.out.print("\n");
+			}
+			fileRead.close();
+			return arr;
+			
+			} catch(FileNotFoundException e) {
+				System.out.println("Error reading file. Stacktrace:");
+				e.printStackTrace();
+				return null;
+		}		
+	}
+	
 }
