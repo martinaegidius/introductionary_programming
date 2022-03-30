@@ -133,10 +133,10 @@ public class GameOfLife {
 	}
 	
 	public void initState() {
+		StdDraw.setCanvasSize(1024,1024);
 		StdDraw.setXscale(-0.5, this.size-0.5);
         StdDraw.setYscale(this.size-0.5, -0.5);
         StdDraw.setPenRadius(10.0/1000);
-        //StdDraw.setCanvasSize(512,512);
         StdDraw.setPenColor(StdDraw.BLACK);
         StdDraw.filledRectangle(0, 0, this.size, this.size);
         StdDraw.setPenColor(StdDraw.WHITE);
