@@ -4,6 +4,7 @@ import java.util.*;
 public class GameOfLife {
 	int[][] state;
 	int size;
+	int[][][] cyclicity;
 	
 	public GameOfLife(int n) { //randomized constructor 
 		this.size = n;
@@ -37,7 +38,7 @@ public class GameOfLife {
 		}
 	}
 	
-	private int liveNeighbours(int x,int y) {
+	private int liveNeighbours(int x,int y) { //assess number of neighbours for every cell in state-array
 		int num = 0;
 		
 		if(x!=0&&x!=this.size-1&&y!=0&&y!=this.size-1) { //Base-case. Use different approach for the edge of the game-field
@@ -83,7 +84,7 @@ public class GameOfLife {
 	}
 	
 	
-	public void printNeighbours() {
+	public void printNeighbours() { //for debugging - check number of calculated neighbours for each cell
 		for(int i=0;i<this.size;i++) {
 			for(int j=0;j<this.size;j++) {
 				System.out.print(liveNeighbours(i,j)+" ");
@@ -113,7 +114,9 @@ public class GameOfLife {
 				}
 			}
 		}
+		//this.cycle1[][] = this.state;
 		this.state = holder;
+		
 		holder = null;
 	}
 	
@@ -132,28 +135,29 @@ public class GameOfLife {
 	public void initState() {
 		StdDraw.setXscale(-0.5, this.size-0.5);
         StdDraw.setYscale(this.size-0.5, -0.5);
-		//StdDraw.setCanvasSize(512,512);
+        StdDraw.setPenRadius(10.0/1000);
+        //StdDraw.setCanvasSize(512,512);
+        StdDraw.setPenColor(StdDraw.BLACK);
+        StdDraw.filledRectangle(0, 0, this.size, this.size);
+        StdDraw.setPenColor(StdDraw.WHITE);
+		
 	}
 	
 	public void drawState() {
-		StdDraw.clear();
-		StdDraw.setXscale(-0.5, this.size-0.5);
-        StdDraw.setYscale(this.size-0.5, -0.5);
-        StdDraw.setPenRadius(10.0/1000);
-		//StdDraw.setCanvasSize(512,512);
-        StdDraw.setPenColor(StdDraw.RED);
-        
+		StdDraw.show(10);
+		StdDraw.clear(StdDraw.BLACK);
 		for(int i=0;i<this.size;i++) {
 			for(int j=0;j<this.size;j++) {
 				if(this.state[i][j]==1) {
-					StdDraw.filledRectangle(i,j,0.5,0.5);
+					StdDraw.filledRectangle(j,i,0.5,0.5);
 				}
 				else {
 					//StdDraw.square(i, j, 0.5);
 				}
 			}
 		}
-		StdDraw.filledRectangle(2, 2, 0.5, 0.5);
+		StdDraw.show(10);
+		
 		
 	}
 	

@@ -4,13 +4,18 @@ import java.util.*;
 public class GameOfLifeMain {
 	public static void main(String[] args) {
 		//random debugging
-		GameOfLife randgame = new GameOfLife(6);
+		GameOfLife randgame = new GameOfLife(100);
 		randgame.printGameState();
 		System.out.print("\n");
 		randgame.printNeighbours();
-		//randgame.initState();
-		System.out.println("Skrt");
-		randgame.drawState();
+		randgame.initState();
+		int epochs = 500;
+		for(int i=0;i<epochs;i++) {
+			randgame.drawState();
+			randgame.nextState();
+			//randgame.isCycle();
+		}
+		
 		
 		
 		
