@@ -12,8 +12,10 @@ public class GameOfLifeMain {
 		int epochs = 500;
 		for(int i=0;i<epochs;i++) {
 			randgame.drawState();
-			randgame.nextState();
-			//randgame.isCycle();
+			randgame.nextState(i);
+			if(randgame.isCycle()==true) {
+				System.out.println("Cyclicity emerged at +"+i+" epochs!");
+			};
 		}
 		
 		
@@ -28,9 +30,9 @@ public class GameOfLifeMain {
 		GameOfLife filledGame = new GameOfLife(arr);
 		filledGame.printGameState();
 		//filledGame.printNeighbours();
-		filledGame.nextState();
+		//filledGame.nextState();
 		filledGame.printGameState();
-		filledGame.nextState();
+		//filledGame.nextState();
 		filledGame.printGameState();
 		System.out.println("HVAD FANDEN");
 		

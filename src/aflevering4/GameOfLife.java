@@ -4,7 +4,9 @@ import java.util.*;
 public class GameOfLife {
 	int[][] state;
 	int size;
-	int[][][] cyclicity;
+	int [][] cycleO;
+	int [][] cycleM;
+	int [][] cycleN;
 	
 	public GameOfLife(int n) { //randomized constructor 
 		this.size = n;
@@ -94,11 +96,12 @@ public class GameOfLife {
 		
 	}
 	
-	public void nextState(){
+	public void nextState(int reps){
 		int num = 0;
 		int[][] holder = new int[this.size][this.size];
 		for(int i=0;i<this.size;i++) {
 			for(int j=0;j<this.size;j++) {
+				
 				num = liveNeighbours(i,j);
 				if(num<2) { //loneliness
 					holder[i][j] = 0;
@@ -112,11 +115,12 @@ public class GameOfLife {
 				else if(num==3 && this.state[i][j]==0) { //give birth
 					holder[i][j]=1;
 				}
+					
 			}
+				
 		}
-		//this.cycle1[][] = this.state;
-		this.state = holder;
 		
+		this.state = holder;
 		holder = null;
 	}
 	
@@ -161,4 +165,19 @@ public class GameOfLife {
 		
 	}
 	
+	public boolean isCycle() {
+		for(int i=0;i<cycleO.length;i++) {
+			for(int j=0;j<cycleO[i].length;j++) {
+				cycleO[i][j] = this.state[i][j];
+				cycleM[i][j] = holder[i][j];
+			}	
+		}
+	
+		if(Arrays.deepEquals(cycleO, cycleN)) {
+			return true;
+		}
+		return false;
+	}
 }
+	
+
