@@ -38,6 +38,11 @@ public class GameOfLife {
 		}
 	}
 	
+	public GameOfLife(String filename) {
+		
+	}
+	
+	
 	private int liveNeighbours(int x,int y) { //assess number of neighbours for every cell in state-array
 		int num = 0;
 		
