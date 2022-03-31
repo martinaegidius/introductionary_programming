@@ -5,6 +5,8 @@ public class Complex {
 	double im; 
 	
 	public Complex() { //NULL-constructor
+		this.re = 0;
+		this.im = 0;
 	}
 	
 	public Complex(double r, double i) { //standard-constructor
@@ -12,28 +14,29 @@ public class Complex {
 		this.im = i;
 	}
 	
-	public Complex(Complex z) {
+	public Complex(Complex z) { //construct a copy of another complex number
 		this.re = z.re;
 		this.im = z.im;
 	}
 	
-	public double getRe() {
+	public double getRe() { //get real part
 		return this.re;
 	}
-	public double getIm() {
+	public double getIm() { //get imaginary part
 		return this.im;
 	}
-	public double abs() {
+	public double abs() { //get magnitude of complex number
 		return Math.sqrt(Math.pow(re, 2)+Math.pow(im, 2));
 	}
-	public Complex plus(Complex other) {
+	
+	public Complex plus(Complex other) { //return complex sum of instance and other complex number
 		double plusRe = this.re + other.re;
 		double plusIm = this.im + other.im;
 		Complex z = new Complex(plusRe,plusIm);
 		return z;
 	}
 	
-	public Complex times(Complex other) {
+	public Complex times(Complex other) {//return complex product of instance and other complex number
 		double timesRe = this.re*other.re-this.im*other.im;
 		double timesIm = this.im*other.re+this.re*other.im;
 		Complex z = new Complex(timesRe,timesIm);
