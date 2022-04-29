@@ -18,14 +18,13 @@ c-implementation: */
 
 int main(){
     char * s = calloc(1,sizeof (char));
-    int length = 0;
     for(int i=1;i<=3;i++){
         for(int k=1;k<=i;k++){
             s = realloc(s, (strlen(s)+2) * sizeof (char)); //+2 for adding terminator and new letter
             for (int t=strlen(s); t>=0; t--){
                 s[t+1] = s[t]; //push existing j's one idx downstream
             }
-            s[0] = 'j'; //fill in new j
+            s[0] = k+'0'; //fill in new j
         }
     }
 

@@ -10,24 +10,19 @@ public class P3 {
         System.out.println(s);
     }
 }
-*/
-
+c-implementation: */
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-int main() {
-char * s = calloc(1, sizeof (char));
-int i, j;
-for (i = 1; i <= 3; i++) {
-for (j = 1; j <= i; j++) {
-s = realloc(s, (strlen(s)+2) * sizeof (char));
-int t;
-for (t = strlen(s); t >= 0; t--) {
-s[t+1] = s[t];
-}
-s[0] = j+'0';
-}
-}
-printf("%s\n", s);
-return 0;
+#include <stdlib.h>
+int main(){
+    char * s = calloc(1,sizeof (char));
+    for(int i=1;i<=3;i++){
+        for(int k=1;k<=i;k++){
+            s = realloc(s, (strlen(s)+2) * sizeof (char)); //+2 for adding terminator and new letter
+            s[strlen(s)+1] = '\0';
+            s[strlen(s)] = k+'0';
+        }
+    }
+    printf("\n%s",s);
+    return 0;
 }
