@@ -84,6 +84,50 @@ void printStack(stack_t * a){
 }
 
 int main() {
+    printf("Testing operations on unitialized stack:");
+    stack_t * myBadStack = NULL;
+    int errPopVal = pop(myBadStack);
+    int errTopVal = top(myBadStack);
+    push(myBadStack, 12);
+    printf("Is it empty: %d\n",empty(myBadStack));
+    printf("unit.pop: %d\n",errPopVal);
+    printf("unit.top: %d\n",errTopVal);
+    
+    stack_t * myStack = newStack();
+    printf("Is it empty: %d\n",empty(myStack));
+    printStackStatus(myStack);
+    printStack(myStack);
+    errPopVal = pop(myStack);
+    errTopVal = top(myStack);
+    printStack(myStack);
+    printStackStatus(myStack);
+    printf("Empty pop: %d\n",errPopVal);
+    printf("Empty top: %d\n",errTopVal);
+    printStack(myStack);
+    printStackStatus(myStack);
+    push(myStack, 123);
+    printStack(myStack);
+    printStackStatus(myStack);
+    push(myStack, 99);
+    printStack(myStack);
+    printStackStatus(myStack);
+    push(myStack, 4444);
+    printStack(myStack);
+    printStackStatus(myStack);
+    
+    while (!empty(myStack)) {
+        int value,value2;
+        value = pop(myStack);
+        value2 = top(myStack);
+        printf("popped: %d, top: %d\n", value,value2);
+    }
+    int value = pop(myStack);
+    printf("popped %d\n",value);
+    double d = -2.2;
+    push(myStack,d);
+    printStack(myStack);
+    printStackStatus(myStack);
+    
     return 0;
 }
 

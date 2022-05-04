@@ -26,11 +26,11 @@ db_t * initDB(){
 
 void addNewStudent(db_t * db){
     //db->array[db->size].name = 'john';
-    int * arr;
-    /*printf("Enter name (4 characters only):\n");
+    //int * arr;
+    printf("Enter name (4 characters only):\n");
     scanf("%s",db->array[db->size].name);
     printf("\nEnter start year (2009-2040):\n");
-    scanf("%d",&db->array[db->size].data);*/
+    scanf("%d",&db->array[db->size].data);
     db->size++;
 }
 
