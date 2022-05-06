@@ -2,9 +2,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <math.h>
 
 #define NAME_SIZE 5
+#define DEBUG 0
 
 typedef struct {
   char name[NAME_SIZE];
@@ -25,37 +26,55 @@ db_t * initDB(){
 }
 
 
-int BecomeBinary(int year, int spring, int gpa){
+int convertToBinary(int year, int season, int integer){
+    //convert year to binary sum 
+    int seqsum = 0;
     year -= 2009;
-    printf("Binary data becomes\nYear: %d\nSeason: %d\nGPA: %d",year,(spring<<5),(gpa<<6));
-    return year + (spring<<5) + (gpa<<6); //kan forstås som zero-padding
+    seqsum += year;
+
+    //convert spring/fall to binary
+    seqsum += season*pow(2,5);
+
+    //convert gpa to binary sum 
+    long int binary = 0;
+    int i = 6;
+    while (integer != 0)
+    {
+        binary = (integer % 2);  // 1 or 0
+        seqsum += binary*pow(2,i);
+        integer /= 2;
+        i++;
+    }
+    if(DEBUG){
+        printf("Seqsum is %d\n",seqsum);
+    }
+    return seqsum;
+
 }
 
-int BinaryToData(int bin, int * year, int * spring, int * gpa){
-    int start_year_c = 2009;
+
+int decryptSum(int dbsum, int * year, int * spring, int * gpa){
+    int year_c = 2009;
+    int season = 0;
     int gpa_c = 0;
-    int spring_c = 0;
-    for(int i=0;i<=4;i++){
-        start_year_c += bin & (1<<i); 
-    } 
-
-    spring_c = (bin & (1<<5))>>5;
-
-    for(int i=6;i<=13;i++){
-        gpa_c += ((bin & (1<<i))>>6);
+    
+    for(int i = 0;i<=4;i++){
+        year_c += dbsum & (1<<i);
+    }
+    *year = year_c;
+    
+    season = (dbsum & (1<<5))>>5;
+    *spring = season;
+    
+    for(int i=6;i<=14;i++){
+        gpa_c += ((dbsum & (1<<i))>>6);
     }
 
-    *year = start_year_c;
-    *spring = spring_c;
     *gpa = gpa_c;
-    
     return 0;
 }
 
-
 void addNewStudent(db_t * db){
-    //db->array[db->size].name = 'john';
-    //int * arr;
     printf("Enter name (4 characters only):\n");
     scanf("%s",db->array[db->size].name);
     printf("\nEnter start year (2009-2040):\n");
@@ -67,35 +86,71 @@ void addNewStudent(db_t * db){
     scanf("%d",&spring);
     printf("\nEnter GPA: \n");
     scanf("%d",&gpa);
-    int binaryData = BecomeBinary(year,spring,gpa);
+    int binaryData = convertToBinary(year,spring,gpa);
     db->array[db->size].data = binaryData;
-
-    //scanf("%d",&db->array[db->size].data);
     db->size++;
 }
 
-void printStudent(db_t * db,int idx){
-    printf("\nName is: %s",db->array[idx].name);
-
+int printStudent(db_t * db,int idx){
+    if(DEBUG){
+        printf("\nName is: %s",db->array[idx].name);
+    }
+    char buf[10];
+    char sbuf[12];
     int year = 0;
     int spring = 0;
     int gpa = 0;
-    int status = BinaryToData(db->array[idx].data,&year,&spring,&gpa);
-    printf("\nBinary data is %d",db->array[idx].data);
-    printf("\nYear is: %d",year);
-    printf("\nSemester is: %d",spring);
-    printf("\nGPA is %d",gpa);
+    int status = decryptSum(db->array[idx].data,&year,&spring,&gpa);   
+    
+    if(idx<10){
+        snprintf(sbuf,12,"s0000%d",idx);
+        printf("\n%s",sbuf);
+    }
+    else if(idx>=10 && idx<100){
+        snprintf(sbuf,12,"s000%d",idx);
+        printf("\n%s",sbuf);
+    }
+    else if(idx>=100 && idx<1000){
+        snprintf(sbuf,12,"s00%d",idx);
+        printf("\n%s",sbuf);
+    }
+    else if(idx>=1000 && idx<10000){
+        snprintf(sbuf,12,"s0%d",idx);
+        printf("\n%s",sbuf);
+    }
+    else{
+        snprintf(sbuf,12,"s%d",idx);
+        printf("\n%s",sbuf);
+    }
+    printf("%*c",5,' ');
+    printf("%s",db->array[idx].name);
+    printf("%*c",5,' ');
+    printf("%d",year);
+    printf("%*c",5,' ');
+    if(spring==0){
+        printf("Spring");
+    }
+    else{
+        printf("Autumn");
+    }
+    printf("%*c",5,' ');
+    printf("%d",gpa);
+    return gpa;
 }
 
 void listAllStudents(db_t * db){
+    int gpa = 0;
     if(db->size==0){
         printf("No students in database.");
+        return;
+    
     }
     else{
         for(int i=0;i<db->size;i++){
-        printStudent(db,i);
+            gpa += printStudent(db,i);
         }
     }
+    printf("\n\nAverage GPA of all students: %f",gpa/(double)db->size);
 }
 
 int main() {
@@ -103,8 +158,6 @@ int main() {
   action = -1;
   db_t * db = initDB();
   puts("Welcome to CUDB - The C University Data Base");
-
-  //fflush();
   while(action!=0){
       printf("\n0: Halt\n1: List all students\n2: Add a new student\n");
       scanf("%d",&action);
@@ -118,16 +171,13 @@ int main() {
       else if(action==0){
           printf("\nBye");
       }
+      else{
+          printf("Only integers allowed. Sadly you broke the database, dont tell your boss! Try again with only integer actions next time :-)");
+          return 1;
+      }
       
+    }
+      
+  return 0;
   }
-  return 0;
 
-/*
-
-Tilf�j funktioner og anden kode efter behov.
-Strukturen student_t m� dog ikke �ndres.
-
-*/
-
-  return 0;
-}
