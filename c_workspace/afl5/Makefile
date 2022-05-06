@@ -1,4 +1,4 @@
 CC = gcc
-CFLAGS = -Wall
+CFLAGS = -Wall -lm
 clean: 
 	rm -f hello
