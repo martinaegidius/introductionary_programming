@@ -5,7 +5,7 @@
 #include <math.h>
 
 #define NAME_SIZE 5
-#define DEBUG 0
+#define DEBUG 1
 
 typedef struct {
   char name[NAME_SIZE];
